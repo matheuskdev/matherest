@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{%block title %}
+    Perfil
+{% endblock %}
+
+{%block body %}
+    Perfil: {{user}}
+    <br>
+    <a href="{{ url_for('home') }}"> Inicio </a>
+{% endblock %}
+    
