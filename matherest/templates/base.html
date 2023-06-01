@@ -12,6 +12,22 @@
 </head>
 <body>
     {% block body %}
+    <h1>My First Website With Flask</h1>
+
+        {% block form %}
+            <form method="POST">
+                {{ form.csrf_token }}
+
+                {{ form.email.label()}}
+                {{ form.email() }}
+
+                {{ form.password.label()}}
+                {{ form.password() }}
+
+                {{ form.button_confirm()}}
+                
+            </form>
+        {%endblock%}
 
     {%endblock%}
 </body>
