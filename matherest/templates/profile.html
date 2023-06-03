@@ -5,8 +5,24 @@
 {% endblock %}
 
 {%block body %}
-    Perfil: {{user}}
-    <br>
-    <a href="{{ url_for('home') }}"> Inicio </a>
+
+    <h1>Perfil: {{ user.username }}</h1>   <br>
+
+    {% if form %}
+        <form method="POST" enctype="multipart/form-data">
+            {{ form.csrf_token }} 
+            {{ form.photo() }}
+            {{ form.button_confirm() }}
+        </form>
+    {% endif %}
+
+
+        
+    <a href="{{ url_for('logout') }}"> Sair </a>
+
+    {% for photo in user.photos %}
+        <img src="{{ url_for('static', filename='photos_posts/default.png')}}">
+    {% endfor %}
+    
 {% endblock %}
     
