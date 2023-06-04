@@ -1,0 +1,15 @@
+<header>
+    <nav>
+      <a href="{{ url_for('feed') }}" class="logo-pinterest" style="text-decoration: none;">
+        <div class="logo-pinterest">
+            <img src="../static/img/logo.png" alt="logo" width="30px" height="30px">
+        </div>
+        <h1>Matherest</h1>
+      </a>
+
+      <div class="restante-nav">
+        <p class="botao-perfil"><a href="{{ url_for('profile', id_user=current_user.id) }}" class="link-nav">Perfil</a></p>
+        <a href="{{ url_for('logout') }}" class="link-nav">Sair</a>
+      </div>
+    </nav>
+  </header>

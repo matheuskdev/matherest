@@ -49,7 +49,7 @@ def create_account():
 # Profile user route
 @app.route("/profile/<id_user>", methods=["GET", "POST"])
 @login_required
-def profile(id_user):
+def profile(id_user):                                
     if int(id_user) == int(current_user.id):
         form_photo = FormPhoto()
 
@@ -80,3 +80,11 @@ def profile(id_user):
 def logout():
     logout_user()
     return redirect(url_for("home"))
+
+
+@app.route("/feed")
+@login_required
+def feed():
+    photos = Photo.query.order_by(Photo.date_create.desc()).all()
+
+    return render_template("feed.html", photos=photos)

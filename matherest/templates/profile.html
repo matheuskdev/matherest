@@ -1,30 +1,70 @@
 {% extends "base.html" %}
 
-{%block title %}
-    Perfil
+{% block titulo %}
+Perfil - {{ user.username }}
 {% endblock %}
 
-{%block body %}
+{% block body %}
+<body>
+{% include "navbar.html" %}
+<div class="container">
 
-    <h1>Perfil: {{ user.username }}</h1>   <br>
-    <a href="{{ url_for('logout') }}"> Sair </a>
-    <br>
-    
-    {% if form %}
-        <form method="POST" enctype="multipart/form-data">
-            {{ form.csrf_token }} 
-            {{ form.photo() }}
-            {{ form.button_confirm() }}
+{% if form %}
+
+
+      <form class="bloco-add-img" method="POST" enctype="multipart/form-data">
+          {{ form.csrf_token }}
+        <h2>{{ user.username }} - Enviar foto</h2>
+
+        <div class="bloco-arquivo">
+            <label for="foto" class="botao-arquivo">
+              Escolher arquivo
+                {{ form.photo(class="input-arquivo", id="foto") }}
+            </label>
+            <span id="imagem-arquivo" class=""></span>
+          </div>
+
+          {{ form.button_confirm(class="botao-login") }}
         </form>
-    {% endif %}
 
-    {% for photo in user.photos %}
-        <img src="{{ url_for('static', filename='photos_posts/{}'.format(photo.image))}}">  
-    {% endfor %}
+{% else %}
+<div class="bloco-add-img">
+    <h2>{{ user.username }} - Ver Perfil</h2>
+</div>
+{% endif %}
 
-    {% if not user.photos %}
-        <img src="{{ url_for('static', filename='photos_posts/default.png') }}">
-    {% endif %}
 
+
+<div class="conteudo">
+{% for photo in user.photos %}
+    <div class="bloco-imagem">
+      <img src="{{ url_for('static', filename='photos_posts/{}'.format(photo.image)) }}" />
+    </div>
+{% endfor %}
+{% if not user.photos %}
+    <div class="bloco-imagem">
+    <img src="{{ url_for('static', filename='photos_posts/default.png') }}">
+    </div>
+{% endif %}
+    </div>
+
+</div>
+
+  <script>
+      let input = document.getElementById("foto");
+      let imagemArquivo = document.getElementById("imagem-arquivo");
+
+      input.addEventListener("change", () => {
+        let inputImagem = document.querySelector("input[type=file]").files[0];
+
+        imagemArquivo.classList.add("visivel");
+        imagemArquivo.innerText = inputImagem.name;
+      });
+    </script>
+</body>
 {% endblock %}
-    
+
+
+
+
+

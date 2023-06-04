@@ -1,6 +1,58 @@
 {% extends "base.html" %}
 
-{%block title %}
-    Inicio
+{% block body %}
+
+  <body class="overflow-hidden">
+    <div class="container">
+      <header>
+        <nav>
+          <div class="logo-pinterest">
+            <div class="logo-pinterest">
+              <img src="../static/img/logo.png" alt="logo" width="30px" height="30px">
+          </div>
+          <h1>Matherest</h1>
+          </div>
+
+          <div class="restante-nav">
+            <a href="" class="link-nav">Sobre</a>
+            <a href="" class="link-nav">Contato</a>
+            <a href="" class="link-nav">Blog</a>
+          </div>
+        </nav>
+      </header>
+
+      <img src="{{ url_for('static', filename='img/fundo-login.png')}}" class="bg-imagem-pinterest" />
+      
+      
+      <div class="container-popup">
+        {% block form %}
+        <form method="POST"class="popup">
+            {{ form.csrf_token }}
+            <div class="logo-pinterest">
+              <img src="../static/img/logo.png" alt="logo" width="60px" height="60px">
+          </div>
+          <h2>Bem-vindo(a) ao <strong style="color: rgb(29, 155, 240);">Matherest</strong></h2>
+
+          <div class="div-input">
+            {{ form.email.label(class="label") }}
+            {{ form.email(class="input",placeholder="E-mail") }}
+          </div>
+
+          <div class="div-input">
+            {{ form.password.label(class="label")}}
+            {{ form.password(class="input",placeholder="Senha") }}
+
+          </div>
+
+          <div class="div-botao">
+            {{ form.button_confirm(class="botao-login")}}
+            <a href="{{ url_for('create_account') }}" class="link-criarconta">Não tem uma conta? Crie aqui</a>
+          </div>
+        </form>
+        {% endblock %}
+    </div>
+    </div>
+    </body>
 {% endblock %}
 
+</html>

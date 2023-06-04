@@ -4,24 +4,45 @@
     Criar Conta
 {% endblock %}
 
-{%block form %}
-    <form method="POST">
-        {{ form.csrf_token }}
+{% block body %}
 
-        {{ form.username.label() }}
-        {{ form.username() }}
 
-        {{ form.email.label()}}
-        {{ form.email() }}
+{% include "comum.html" %}
+<div class="container-popup">
+{% block form %}
+        <form method="POST"class="popup">
+            {{ form.csrf_token }}
+            <div class="logo-pinterest">
+                <img src="../static/img/logo.png" alt="logo" width="30px" height="30px">
+            </div>
+          <h2>Crie sua conta</h2>
 
-        {{ form.password.label()}}
-        {{ form.password() }}
+          <div class="div-input">
+            {{ form.username.label(class="label") }}
+            {{ form.username(class="input",placeholder="Usuário") }}
+          </div>
 
-        {{ form.password_confirm.label()}}
-        {{ form.password_confirm() }}
+          <div class="div-input">
+            {{ form.email.label(class="label") }}
+            {{ form.email(class="input",placeholder="E-mail") }}
+          </div>
 
-        {{ form.button_confirm()}}
-        
-    </form>
+          <div class="div-input">
+            {{ form.password.label(class="label")}}
+            {{ form.password(class="input",placeholder="Senha") }}
+          </div>
+
+          <div class="div-input">
+            {{ form.password_confirm.label(class="label") }}
+            {{ form.password_confirm(class="input",placeholder="Confirmar Senha") }}
+          </div>
+
+          <div class="div-botao">
+            {{ form.button_confirm(class="botao-login")}}
+            <a href="{{ url_for('home') }}" class="link-criarconta">Já tem uma conta ?
+                <strong>Faça o login!</strong></a>
+          </div>
+        </form>
+        {% endblock %}
+</div>
 {% endblock %}
-
