@@ -2,23 +2,23 @@ from flask import render_template, url_for
 from flask_login import login_required, login_user, logout_user, current_user
 from matherest import *
 from matherest.forms import FormLogin, FormCreateAccount, FormPhoto
-from matherest.models import User, Photo, Like
-
+from matherest.models import User, Photo
+import os
+from werkzeug.utils import secure_filename
 
 
 #Home and Login route
 @app.route("/", methods=["GET", "POST"])
 def home():
     form_login = FormLogin()
+
     if form_login.validate_on_submit():
         user = User.query.filter_by(
               email=form_login.email.data).first()
         if user and bcrypt.check_password_hash(user.password, 
                                        form_login.password.data):
             login_user(user)
-            login_user(user, remember=True)
-            return redirect(url_for("profile", 
-                                    id_user=user.id))
+            return redirect(url_for("profile", id_user=user.id))
     
     return render_template("home.html", form=form_login)
 
@@ -50,14 +50,27 @@ def create_account():
 @app.route("/profile/<id_user>", methods=["GET", "POST"])
 @login_required
 def profile(id_user):
-    if id_user == int(current_user.id):
-        # render profile user loged
+    if int(id_user) == int(current_user.id):
         form_photo = FormPhoto()
+
+        if form_photo.validate_on_submit():
+            arquive = form_photo.photo.data
+            secure_name = secure_filename(arquive.filename)
+
+            arquive_path = os.path.join(os.path.abspath(os.path.dirname(__file__)),
+                                   app.config["UPLOAD_FOLDER"], secure_name)
+            arquive.save(arquive_path)
+
+            photo = Photo(image=secure_name, id_user=current_user.id)
+            
+            database.session.add(photo)
+            database.session.commit()
+
         return render_template("profile.html", 
                                user=current_user, form=form_photo)
     else:
         user = User.query.get(int(id_user))
-    return render_template("profile.html", user=id_user, form=None)
+        return render_template("profile.html", user=user, form=None)
 
 
 

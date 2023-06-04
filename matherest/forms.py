@@ -21,5 +21,5 @@ class FormCreateAccount(FlaskForm):
             return ValidationError("Email já cadastrado, faça login para continuar")
         
 class FormPhoto(FlaskForm):
-    photo = FileField("Foto", validators=[DataRequired()])
-    button_confirm =    SubmitField("Criar Usuário")
+    photo =             FileField("Foto", validators=[DataRequired()])
+    button_confirm =    SubmitField("Postar Foto")

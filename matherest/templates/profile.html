@@ -7,7 +7,9 @@
 {%block body %}
 
     <h1>Perfil: {{ user.username }}</h1>   <br>
-
+    <a href="{{ url_for('logout') }}"> Sair </a>
+    <br>
+    
     {% if form %}
         <form method="POST" enctype="multipart/form-data">
             {{ form.csrf_token }} 
@@ -16,13 +18,13 @@
         </form>
     {% endif %}
 
-
-        
-    <a href="{{ url_for('logout') }}"> Sair </a>
-
     {% for photo in user.photos %}
-        <img src="{{ url_for('static', filename='photos_posts/default.png')}}">
+        <img src="{{ url_for('static', filename='photos_posts/{}'.format(photo.image))}}">  
     {% endfor %}
-    
+
+    {% if not user.photos %}
+        <img src="{{ url_for('static', filename='photos_posts/default.png') }}">
+    {% endif %}
+
 {% endblock %}
     
